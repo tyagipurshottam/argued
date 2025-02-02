@@ -2,13 +2,13 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: my-app
+  name: agrued
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: https://github.com/tyagipurshottam/argued.git
     targetRevision: HEAD
-    path: myapp
+    path: argued
   destination:
     server: https://kubernetes.default.svc
