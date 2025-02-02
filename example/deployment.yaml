@@ -1,14 +1,21 @@
----
-apiVersion: argoproj.io/v1alpha1
-kind: Application
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: my-app
-  namespace: argocd
+  name: nginx
+  labels:
+    app: nginx
 spec:
-  project: default
-  source:
-    repoURL: https://github.com/tyagipurshottam/argued.git
-    targetRevision: HEAD
-    path: my-app
-  destination:
-    server: https://kubernetes.default.svc
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx-container
+        image: purshottam72/nginx:v0.1.0
+        ports:
+          - containerPort: 80
