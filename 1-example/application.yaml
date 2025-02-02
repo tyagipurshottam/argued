@@ -9,6 +9,6 @@ spec:
   source:
     repoURL: https://github.com/tyagipurshottam/argued.git
     targetRevision: HEAD
-    path: argured
+    path: myapp
   destination:
     server: https://kubernetes.default.svc
