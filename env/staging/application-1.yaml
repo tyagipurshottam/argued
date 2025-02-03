@@ -3,7 +3,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: tyagi
-  namespace: foo
+  namespace: default
 spec:
   project: default
   source:
