@@ -3,7 +3,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: sita
-  namespace: bar
+  namespace: foo
 spec:
   project: default
   source:
