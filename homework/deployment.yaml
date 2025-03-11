@@ -1,0 +1,108 @@
+# mysql-master-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-master
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql-master
+  template:
+    metadata:
+      labels:
+        app: mysql-master
+    spec:
+      containers:
+      - name: mysql
+        image: mysql:8.0
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: "password"
+        - name: MYSQL_DATABASE
+          value: "test_db"
+
+---
+# mysql-slave-deployment.yaml (similar to master but with replication config)
+
+---
+# writer-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: writer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: writer
+  template:
+    metadata:
+      labels:
+        app: writer
+    spec:
+      containers:
+      - name: writer
+        image: writer:latest
+        ports:
+        - containerPort: 8000  # Prometheus metrics
+
+---
+# reader-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reader
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: reader
+  template:
+    metadata:
+      labels:
+        app: reader
+    spec:
+      containers:
+      - name: reader
+        image: reader:latest
+        ports:
+        - containerPort: 5000  # API
+        - containerPort: 8000  # Prometheus metrics
+        env:
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+
+---
+# reader-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: reader-service
+spec:
+  selector:
+    app: reader
+  ports:
+  - port: 80
+    targetPort: 5000
+  type: ClusterIP
+
+---
+# ingress.yaml (optional)
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: reader-ingress
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: reader-service
+            port:
+              number: 80
