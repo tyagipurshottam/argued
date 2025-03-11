@@ -14,5 +14,5 @@ spec:
     spec:
       containers:
       - name: writer
-        image: <your-docker-image-name>:latest
+        image: purshottam72/writer:001
         command: ["python", "app.py", "--mode", "writer"]
