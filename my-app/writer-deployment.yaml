@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: writer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: writer
+  template:
+    metadata:
+      labels:
+        app: writer
+    spec:
+      containers:
+      - name: writer
+        image: <your-docker-image-name>:latest
+        command: ["python", "app.py", "--mode", "writer"]
