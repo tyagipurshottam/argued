@@ -24,7 +24,40 @@ spec:
           value: "test_db"
 
 ---
-# mysql-slave-deployment.yaml (similar to master but with replication config)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-slave
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql-slave
+  template:
+    metadata:
+      labels:
+        app: mysql-slave
+    spec:
+      containers:
+      - name: mysql
+        image: mysql:8.0 # Or your desired MySQL version
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: "password" # Should match master password
+        - name: MYSQL_REPLICATION_MODE
+          value: "slave"
+        - name: MYSQL_MASTER_HOST
+          value: "mysql-master" # Service name of the master
+        - name: MYSQL_MASTER_ROOT_PASSWORD
+          value: "password" # Should match master password
+        ports:
+        - containerPort: 3306
+        volumeMounts: # Only if you need persistence
+        - name: mysql-data
+          mountPath: /var/lib/mysql
+      volumes: # Only if you need persistence
+      - name: mysql-data
+        emptyDir: {} # Or use a PersistentVolumeClaim
 
 ---
 # writer-deployment.yaml
