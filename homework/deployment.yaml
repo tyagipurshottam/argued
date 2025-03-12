@@ -28,6 +28,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mysql-slave
+  namespace: foo
 spec:
   replicas: 1
   selector:
