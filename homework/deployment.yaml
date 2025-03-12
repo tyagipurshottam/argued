@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: writer
-        image: purshottam72/writer:001
+        image: purshottam72/writer:004
         ports:
         - containerPort: 8000  # Prometheus metrics
 
@@ -39,7 +39,7 @@ spec:
     spec:
       containers:
       - name: reader
-        image: purshottam72/reader:001
+        image: purshottam72/reader:004
         ports:
         - containerPort: 5000  # API
         - containerPort: 8000  # Prometheus metrics
