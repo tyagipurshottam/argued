@@ -1,10 +1,14 @@
 ---
-
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: foo
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: mysql
+  namespace: foo
   labels:
     app: mysql
     app.kubernetes.io/name: mysql
