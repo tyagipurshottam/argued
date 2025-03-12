@@ -1,0 +1,23 @@
+# writer-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: writer
+  namespace: foo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: writer
+  template:
+    metadata:
+      labels:
+        app: writer
+    spec:
+      containers:
+      - name: writer
+        image: purshottam72/writer:006
+        ports:
+        - containerPort: 8000  # Prometheus metrics
+
+
