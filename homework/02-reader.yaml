@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: reader
-        image: purshottam72/reader:006
+        image: purshottam72/reader:007
         ports:
         - containerPort: 5000  # API
         - containerPort: 8000  # Prometheus metrics
