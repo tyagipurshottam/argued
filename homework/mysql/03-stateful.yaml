@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: mysql
-  amespace: foo
+  namespace: foo
 spec:
   selector:
     matchLabels:
