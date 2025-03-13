@@ -5,7 +5,7 @@ metadata:
   name: reader
   namespace: foo
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: reader
